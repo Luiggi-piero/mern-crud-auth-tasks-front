@@ -22,6 +22,7 @@ export const useTasks = () => {
 export const TasksProvider = ({ children }) => {
 
     const [tasks, setTasks] = useState([])
+    const [loading, setLoading] = useState(true)
 
     const getTasks = async () => {
         try {
@@ -33,8 +34,16 @@ export const TasksProvider = ({ children }) => {
     }
 
     const createTask = async (task) => {
-        const res = await createTaskRequest(task)
-        console.log(res);
+        try {
+            const res = await createTaskRequest(task)
+            setLoading(true)
+            console.log(res);
+        } catch (error) {
+            console.log(error);
+        } finally {
+            console.log('finally');
+            setLoading(false)
+        }
     }
 
     const deleteTask = async (id) => {
@@ -58,10 +67,18 @@ export const TasksProvider = ({ children }) => {
     const updateTask = async (id, task) => {
         try {
             const res = await updateTaskRequest(id, task)
+            setLoading(true)
             console.log(res);
         } catch (error) {
             console.log(error);
+        } finally {
+            console.log('finally');
+            setLoading(false)
         }
+    }
+
+    const changeLoading = (value) => {
+        setLoading(value)
     }
 
     return (
@@ -71,7 +88,9 @@ export const TasksProvider = ({ children }) => {
             getTasks,
             deleteTask,
             getTask,
-            updateTask
+            updateTask,
+            loading,
+            changeLoading
         }}>
             {children}
         </TasksContext.Provider>

@@ -19,7 +19,7 @@ function TaskFormPage() {
     handleSubmit,
     setValue  // manejar los valores de los campos registrados en react-hook-form
   } = useForm()
-  const { createTask, getTask, updateTask } = useTasks()
+  const { createTask, getTask, updateTask, loading, changeLoading } = useTasks()
   const navigate = useNavigate()
   const params = useParams();
 
@@ -36,6 +36,13 @@ function TaskFormPage() {
     loadTask()
   }, [])
 
+  useEffect(() => {
+    if (!loading) {
+      navigate('/tasks');
+      changeLoading(true);
+    }
+  }, [loading])
+
   const onSubmit = handleSubmit((data) => {
     const dataValid = {
       ...data,
@@ -47,7 +54,7 @@ function TaskFormPage() {
     } else {
       createTask(dataValid);
     }
-    navigate('/tasks');
+    // navigate('/tasks');
   })
 
   return (

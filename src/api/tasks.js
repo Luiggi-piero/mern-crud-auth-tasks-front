@@ -1,6 +1,6 @@
 import axios from './axios';
 
-export const getTasksRequest = () => axios.get('/tasks')
+export const getTasksRequest = (page) => axios.get(`/tasks?page=${page}`)
 
 export const getTaskRequest = (id) => axios.get(`/tasks/${id}`)
 

@@ -23,11 +23,13 @@ export const TasksProvider = ({ children }) => {
 
     const [tasks, setTasks] = useState([])
     const [loading, setLoading] = useState(true)
+    const [paginationDetail, setPaginationDetail] = useState(null)
 
-    const getTasks = async () => {
+    const getTasks = async (page = 1) => {
         try {
-            const res = await getTasksRequest()
-            setTasks(res.data)
+            const res = await getTasksRequest(page)
+            setTasks(res.data.results)
+            setPaginationDetail(res.data.info)
         } catch (error) {
             console.log(error);
         }
@@ -49,7 +51,8 @@ export const TasksProvider = ({ children }) => {
     const deleteTask = async (id) => {
         try {
             const res = await deleteTaskRequest(id);
-            if (res.status === 204) setTasks(tasks.filter(task => task._id !== id))
+            // if (res.status === 204) setTasks(tasks.filter(task => task._id !== id))
+            if (res.status === 204) getTasks()
         } catch (error) {
             console.log(error);
         }
@@ -90,7 +93,8 @@ export const TasksProvider = ({ children }) => {
             getTask,
             updateTask,
             loading,
-            changeLoading
+            changeLoading,
+            paginationDetail
         }}>
             {children}
         </TasksContext.Provider>

@@ -46,7 +46,12 @@ function TaskFormPage() {
   const onSubmit = handleSubmit((data) => {
     const dataValid = {
       ...data,
-      date: data.date ? dayjs.utc(data.date).format() : dayjs.utc().format()
+      //  Formato que debe tener date: 2024-06-28T00:00:00Z
+      // date: data.date ? dayjs.utc(data.date).format() : dayjs.utc().format()
+
+      // Con dayjs().tz('America/Lima') obtenemos este formato: 2024-06-27T10:49:49-05:00
+      // entonces se debe formatear a 'YYYY-MM-DDTHH:mm:ss[Z]'
+      date: data.date ? dayjs.utc(data.date).format() : dayjs().tz('America/Lima').format('YYYY-MM-DDTHH:mm:ss[Z]')
     }
 
     if (params.id) {

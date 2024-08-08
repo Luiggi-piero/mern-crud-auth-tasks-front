@@ -2,7 +2,7 @@ import axios from 'axios';
 
 const instance = axios.create({
     // baseURL: 'http://localhost:3000/api', // la url base que usara en cada peticion
-    baseURL: 'https://mern-crud-auth-tasks.onrender.com/api', // la url base que usara en cada peticion
+    baseURL: 'https://mern-crud-auth-tasks.onrender.com/api',
     withCredentials: true   // para que establezca las cookies
 })
 

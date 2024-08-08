@@ -9,14 +9,27 @@ import TasksPage from './pages/TasksPage';
 import ProtectedRoute from './ProtectedRoute';
 import { TasksProvider } from './context/TasksContext';
 import Navbar from './components/Navbar';
+import Loading from './components/Loading';
+import { useLoading } from './context/LoadingContext.jsx';
+import { useEffect } from 'react';
+import setLoadingInterceptor from './interceptors/loadingInterceptor';
 
 function App() {
+
+  const { showLoading, hideLoading } = useLoading();
+
+  useEffect(() => {
+    setLoadingInterceptor({ showLoading, hideLoading })
+  }, []);
+
   return (
     <AuthProvider>
       <TasksProvider>
         <BrowserRouter>
           <main className='container mx-auto px-10'>
             <Navbar />
+            <Loading />
+
             <Routes>
               <Route path='/' element={<HomePage />}></Route>
               <Route path='/login' element={<LoginPage />}></Route>

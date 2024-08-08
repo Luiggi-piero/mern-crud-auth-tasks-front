@@ -11,7 +11,7 @@ function TasksPage() {
     getTasks()
   }, [])
 
-  if (tasks.length === 0) return (<h1>No tasks</h1>)
+  if (tasks.length === 0) return (<h1 className="text-center my-8">No tasks</h1>)
 
   return (
     <>
